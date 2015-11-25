@@ -50,14 +50,12 @@ fn main() {
 	// is not complete, or I have to do something else to recieve the window handle. Check MSDN docs on
 	// GetWindowThreadProcessId ()
 
-	println!("handle for {} -- {:?}", procName.trim(), recvStr);
+	println!("pid for {} -- {:?}", procName.trim(), recvStr);
 	//Above returns a memory address...?
 
 	//Upon review of the MSDN documentation, GetWindowThreadProcessId does indeed return a PID. GetProcessId 
 	//is no longer needed.
 	
-
-	println!("pid for {} -- {:?}", procName.trim(), procID);
 
 
 
