@@ -1,6 +1,7 @@
 /* Rust linked library injector
    TODO : Fix GetWindowThreadProcessId
-   		  Complete the damn code, tidy up.
+    Complete the damn code, tidy up.
+
   */
 
 extern crate kernel32;
@@ -13,6 +14,8 @@ use std::ptr;
 use std::io::{self, BufRead};
 use kernel32::OpenProcess;
 use user32::GetWindowThreadProcessId;
+use user32::FindWindowA;
+
 
 //woo hardcore copypaste 
 fn get_input() -> String {
@@ -33,15 +36,20 @@ fn main() {
 	let dllPath = get_input();
 	println!("Path -- {}", dllPath);
 
-	let procNameVoid: *mut winapi::windef::HWND__ = unsafe {
+	let proci8: *const i8 = unsafe {
 		mem::transmute(&procName)
+	};
+
+	let procHWND = unsafe {
+		FindWindowA(ptr::null(), proci8) 
 	};
 
 	let mut reciever: *mut u32 = ptr::null_mut();
 
 	unsafe { 
-		GetWindowThreadProcessId(procNameVoid, reciever)
+		GetWindowThreadProcessId(procHWND as winapi::HWND, reciever)
 	};
+
 
 	let recvStr: *mut String = unsafe {
 		mem::transmute(&reciever)
