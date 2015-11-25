@@ -1,0 +1,9 @@
+[package]
+name = "injector"
+version = "0.1.0"
+authors = ["jimbo"]
+
+[dependencies]
+winapi = "*"
+kernel32-sys = "*"
+user32-sys = "*"
