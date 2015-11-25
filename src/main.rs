@@ -12,9 +12,9 @@ use std::u32;
 use std::ptr;
 use std::io::{self, BufRead};
 use kernel32::OpenProcess;
-use kernel32::GetProcessId;
 use user32::GetWindowThreadProcessId;
 
+//woo hardcore copypaste 
 fn get_input() -> String {
 	let mut stdin = io::stdin();
 	let mut buffer = String::new();
@@ -46,16 +46,16 @@ fn main() {
 	let recvStr: *mut String = unsafe {
 		mem::transmute(&reciever)
 	};
+	//Remove the above, and "handle" returned is a null pointer. Perhaps GetWindowThreadProcessId function
+	// is not complete, or I have to do something else to recieve the window handle. Check MSDN docs on
+	// GetWindowThreadProcessId ()
 
 	println!("handle for {} -- {:?}", procName.trim(), recvStr);
+	//Above returns a memory address...?
 
-	let recvVoid: *mut std::os::raw::c_void = unsafe {
-		mem::transmute(&reciever)
-	};
-
-	let procID = unsafe {
-		GetProcessId(recvVoid)
-	};
+	//Upon review of the MSDN documentation, GetWindowThreadProcessId does indeed return a PID. GetProcessId 
+	//is no longer needed.
+	
 
 	println!("pid for {} -- {:?}", procName.trim(), procID);
 
